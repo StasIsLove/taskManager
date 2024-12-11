@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Задачи</h1>
+<form method="get">
+    <select name="status" onchange="this.form.submit()" class="form-select w-25 mb-3">
+        {% for status in statuses %}
+            <option value="{{ status }}" {% if selected_status == status %}selected{% endif %}>
+                {{ status }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
+<ul class="list-group">
+    {% for task in tasks %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{{ url_for('main.task_detail', task_id=task.id) }}">{{ task.title }}</a>
+            <div>
+                <a href="{{ url_for('main.edit_task', task_id=task.id) }}" class="btn btn-warning btn-sm">Редактировать</a>
+                <a href="{{ url_for('main.delete_task', task_id=task.id) }}" class="btn btn-danger btn-sm">Удалить</a>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('main.add_task') }}" class="btn btn-primary mt-3">Добавить задачу</a>
+{% endblock %}

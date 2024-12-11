@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ 'Редактировать' if task else 'Добавить' }} задачу</h1>
+<form method="post">
+    <div class="mb-3">
+        <label for="title" class="form-label">Название</label>
+        <input type="text" name="title" class="form-control" value="{{ task.title if task else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Описание</label>
+        <textarea name="description" class="form-control" rows="3">{{ task.description if task else '' }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="status" class="form-label">Статус</label>
+        <select name="status" class="form-select">
+            {% for status in ['Направлена в работу', 'В работе', 'Выполнена'] %}
+                <option value="{{ status }}" {% if task and task.status == status %}selected{% endif %}>
+                    {{ status }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Сохранить</button>
+</form>
+{% endblock %}
